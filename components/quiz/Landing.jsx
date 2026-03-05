@@ -66,7 +66,7 @@ export default function Landing({ onStart }) {
           onClick={onStart}
           style={{
             display: 'inline-flex', alignItems: 'center', gap: 10,
-            padding: '18px 40px', borderRadius: 14,
+            padding: '22px 52px', borderRadius: 14, fontSize: '1.15rem',
             background: 'var(--accent)', color: 'white',
             fontWeight: 700, fontSize: '1.05rem', border: 'none', cursor: 'pointer',
             boxShadow: '0 0 40px rgba(37,99,235,0.35), 0 8px 32px rgba(37,99,235,0.2)',

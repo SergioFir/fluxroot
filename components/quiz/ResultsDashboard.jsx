@@ -78,7 +78,7 @@ export default function ResultsDashboard({ results, email }) {
       <header style={{
         position: 'sticky', top: 0, zIndex: 50,
         height: 64, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 40px',
-        background: 'rgba(7,9,15,0.92)', backdropFilter: 'blur(16px)', borderBottom: '1px solid var(--border-subtle)',
+        background: 'rgba(20,28,43,0.92)', backdropFilter: 'blur(16px)', borderBottom: '1px solid var(--border-subtle)',
       }}>
         <img src="/logo.png" alt="FluxRoot" style={{ height: 26, width: 'auto', objectFit: 'contain' }} />
         <span style={{ padding: '5px 14px', borderRadius: 100, background: 'var(--accent-dim)', border: '1px solid var(--accent-border)', color: 'var(--accent)', fontSize: 12, fontWeight: 500 }}>

@@ -66,10 +66,10 @@ export function useQuiz() {
     });
 
     if (currentQuestionIndex >= updatedActiveQuestions.length - 1) {
-      // All questions answered — go to loading
+      // All questions answered — go straight to email capture
       const computed = calculateResults(newAnswers, updatedActiveQuestions);
       setResults(computed);
-      setStep(STEPS.LOADING);
+      setStep(STEPS.EMAIL_CAPTURE);
     } else {
       setCurrentQuestionIndex(i => i + 1);
     }

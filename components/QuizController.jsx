@@ -6,7 +6,6 @@ import Landing from '@/components/quiz/Landing';
 import MicroCommit from '@/components/quiz/MicroCommit';
 import ProgressBar from '@/components/quiz/ProgressBar';
 import QuestionCard from '@/components/quiz/QuestionCard';
-import LoadingScreen from '@/components/quiz/LoadingScreen';
 import EmailCapture from '@/components/quiz/EmailCapture';
 import ResultsDashboard from '@/components/quiz/ResultsDashboard';
 import { sendToWebhook } from '@/lib/webhook';
@@ -34,10 +33,9 @@ export default function QuizController() {
         estimated_loss_max: results?.revenueLossMax,
       });
     } catch (err) {
-      // Don't block the user if webhook fails
       console.error('[Webhook] Submission failed:', err);
     }
-    submitEmail(emailVal, storeUrlVal);
+    // Don't navigate away — EmailCapture handles the thank you state internally
   };
 
   const showNav = [STEPS.MICRO_COMMIT, STEPS.QUIZ, STEPS.EMAIL_CAPTURE].includes(step);
@@ -52,7 +50,7 @@ export default function QuizController() {
           height: `${NAV_H}px`,
           display: 'flex', alignItems: 'center', justifyContent: 'space-between',
           padding: '0 32px',
-          background: 'rgba(7,9,15,0.92)',
+          background: 'rgba(20,28,43,0.92)',
           backdropFilter: 'blur(16px)',
           borderBottom: '1px solid var(--border-subtle)',
         }}>
@@ -93,9 +91,7 @@ export default function QuizController() {
           </div>
         )}
 
-        {step === STEPS.LOADING && <LoadingScreen key="loading" onComplete={onLoadingComplete} />}
-
-        {step === STEPS.EMAIL_CAPTURE && (
+{step === STEPS.EMAIL_CAPTURE && (
           <div key="email" style={{ minHeight: '100vh', paddingTop: NAV_H, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <div style={{ width: '100%', maxWidth: 520, padding: '40px 32px' }}>
               <EmailCapture onSubmit={handleEmailSubmit} />
