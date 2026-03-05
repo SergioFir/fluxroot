@@ -50,14 +50,14 @@ export const QUESTIONS = [
     question: 'Cum îți monitorizezi performanța afacerii în prezent?',
     options: [
       {
-        id: 'multiple_dash',
-        label: 'Mai multe dashboard-uri / spreadsheet-uri',
-        scores: { [CATEGORIES.VISIBILITY]: 3, [CATEGORIES.PROFIT]: 2 },
-      },
-      {
         id: 'platform_only',
         label: 'Doar analytics-ul platformei',
-        scores: { [CATEGORIES.VISIBILITY]: 2, [CATEGORIES.PROFIT]: 1 },
+        scores: { [CATEGORIES.VISIBILITY]: 1, [CATEGORIES.PROFIT]: 0 },
+      },
+      {
+        id: 'multiple_dash',
+        label: 'Mai multe dashboard-uri / spreadsheet-uri',
+        scores: { [CATEGORIES.VISIBILITY]: 2, [CATEGORIES.PROFIT]: 2 },
       },
       {
         id: 'manual',
@@ -129,16 +129,10 @@ export const QUESTIONS = [
     type: 'b2b_trigger', // triggers follow-up q5b if yes/sometimes
     options: [
       {
-        id: 'yes_often',
-        label: 'Da, frecvent',
-        scores: { [CATEGORIES.RECEIVABLES]: 3 },
-        triggerFollowUp: true,
-      },
-      {
-        id: 'sometimes',
-        label: 'Uneori',
-        scores: { [CATEGORIES.RECEIVABLES]: 2 },
-        triggerFollowUp: true,
+        id: 'never',
+        label: 'Niciodată',
+        scores: { [CATEGORIES.RECEIVABLES]: 0 },
+        triggerFollowUp: false,
       },
       {
         id: 'rarely',
@@ -147,10 +141,16 @@ export const QUESTIONS = [
         triggerFollowUp: false,
       },
       {
-        id: 'never',
-        label: 'Niciodată',
-        scores: { [CATEGORIES.RECEIVABLES]: 0 },
-        triggerFollowUp: false,
+        id: 'sometimes',
+        label: 'Uneori',
+        scores: { [CATEGORIES.RECEIVABLES]: 2 },
+        triggerFollowUp: true,
+      },
+      {
+        id: 'yes_often',
+        label: 'Da, frecvent',
+        scores: { [CATEGORIES.RECEIVABLES]: 3 },
+        triggerFollowUp: true,
       },
     ],
   },

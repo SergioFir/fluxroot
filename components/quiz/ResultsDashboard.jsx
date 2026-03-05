@@ -89,18 +89,53 @@ export default function ResultsDashboard({ results, email }) {
       <div style={{ maxWidth: 800, margin: '0 auto', padding: '56px 32px 100px' }}>
 
         {/* Page title */}
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} style={{ marginBottom: 48 }}>
-          <p style={{ color: 'var(--text-muted)', fontSize: 13, marginBottom: 10 }}>Raport pentru {email}</p>
-          <h1 style={{ fontWeight: 800, fontSize: '2.4rem', color: 'white', lineHeight: 1.1, letterSpacing: '-0.02em', marginBottom: 10 }}>
-            Rezultatele Auditului Tău
-          </h1>
-          <p style={{ color: 'var(--text-secondary)', fontSize: '1rem' }}>
-            Am detectat <strong style={{ color: 'white' }}>{results.topProblems.length} probleme principale</strong> care îți afectează profitabilitatea.
-          </p>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} style={{ marginBottom: 48, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 24, flexWrap: 'wrap' }}>
+          <div>
+            <p style={{ color: 'var(--text-muted)', fontSize: 13, marginBottom: 10 }}>Raport pentru {email}</p>
+            <h1 style={{ fontWeight: 800, fontSize: '2.4rem', color: 'white', lineHeight: 1.1, letterSpacing: '-0.02em', marginBottom: 10 }}>
+              Rezultatele Auditului Tău
+            </h1>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '1rem' }}>
+              {results.topProblems.length > 0
+                ? <>Am detectat <strong style={{ color: 'white' }}>{results.topProblems.length} probleme principale</strong> care îți afectează profitabilitatea.</>
+                : <>Magazinul tău este <strong style={{ color: '#22c55e' }}>bine configurat</strong>. Nu am detectat probleme majore.</>
+              }
+            </p>
+          </div>
+          <a
+            href="#calendly"
+            onClick={e => { e.preventDefault(); document.getElementById('calendly-section')?.scrollIntoView({ behavior: 'smooth' }); }}
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: 8, flexShrink: 0,
+              padding: '12px 22px', borderRadius: 10,
+              background: 'var(--accent)', color: 'white', border: 'none', cursor: 'pointer',
+              fontWeight: 600, fontSize: '0.9rem', textDecoration: 'none',
+              boxShadow: '0 0 20px rgba(37,99,235,0.25)',
+              transition: 'background 0.15s',
+            }}
+            onMouseEnter={e => e.currentTarget.style.background = 'var(--accent-hover)'}
+            onMouseLeave={e => e.currentTarget.style.background = 'var(--accent)'}
+          >
+            Programează un Call
+            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </a>
         </motion.div>
 
+        {/* ── SECTIONS 1-3: only shown when problems exist ── */}
+        {results.topProblems.length === 0 && (
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }} style={{ marginBottom: 48, padding: '40px', borderRadius: 20, background: 'rgba(34,197,94,0.06)', border: '1px solid rgba(34,197,94,0.2)', textAlign: 'center' }}>
+            <div style={{ fontSize: '2.5rem', marginBottom: 12 }}>✓</div>
+            <p style={{ fontWeight: 700, fontSize: '1.2rem', color: '#22c55e', marginBottom: 8 }}>Operațiunile tale sunt bine puse la punct!</p>
+            <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: 1.6 }}>
+              Nu am detectat goluri majore în automatizările tale. Dacă vrei să scalezi sau să optimizezi și mai mult, programează o consultație mai jos.
+            </p>
+          </motion.div>
+        )}
+
         {/* ── SECTION 1: Loss estimate ── */}
-        <motion.div
+        {results.topProblems.length > 0 && <motion.div
           initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}
           style={{ marginBottom: 48 }}
         >
@@ -142,10 +177,10 @@ export default function ResultsDashboard({ results, email }) {
               ))}
             </div>
           </div>
-        </motion.div>
+        </motion.div>}
 
         {/* ── SECTION 2: Top 3 Problems ── */}
-        <motion.div
+        {results.topProblems.length > 0 && <motion.div
           initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
           style={{ marginBottom: 48 }}
         >
@@ -187,10 +222,10 @@ export default function ResultsDashboard({ results, email }) {
               );
             })}
           </div>
-        </motion.div>
+        </motion.div>}
 
         {/* ── SECTION 3: Recommended Automations ── */}
-        <motion.div
+        {results.topProblems.length > 0 && <motion.div
           initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
           style={{ marginBottom: 48 }}
         >
@@ -248,10 +283,11 @@ export default function ResultsDashboard({ results, email }) {
               ))}
             </div>
           </div>
-        </motion.div>
+        </motion.div>}
 
         {/* ── SECTION 4: CTA + Calendly ── */}
         <motion.div
+          id="calendly-section"
           initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }}
         >
           <div style={{ borderRadius: 20, overflow: 'hidden', border: '1px solid var(--border)', background: 'var(--card)', position: 'relative' }}>
@@ -260,11 +296,15 @@ export default function ResultsDashboard({ results, email }) {
             {/* Header */}
             <div style={{ padding: '40px 48px 32px', textAlign: 'center', position: 'relative', borderBottom: '1px solid var(--border-subtle)' }}>
               <p style={{ fontSize: 11, fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--text-muted)', marginBottom: 12 }}>Pasul următor</p>
-              <h3 style={{ fontWeight: 800, fontSize: '1.8rem', color: 'white', lineHeight: 1.2, marginBottom: 12, letterSpacing: '-0.01em' }}>
-                Vrei să construim aceste automatizări pentru tine?
+              <h3 style={{ fontWeight: 800, fontSize: '1.8rem', color: 'white', lineHeight: 1.2, marginBottom: 8, letterSpacing: '-0.01em' }}>
+                Acesta este un audit general.
               </h3>
-              <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: 1.65, maxWidth: 480, margin: '0 auto' }}>
-                Programează o consultație gratuită de 30 de minute direct mai jos.
+              <p style={{ fontWeight: 600, fontSize: '1.1rem', color: 'var(--accent)', marginBottom: 12 }}>
+                Vrei să afli ce soluții îți vor salva cu adevărat timp și bani?
+              </p>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem', lineHeight: 1.75, maxWidth: 480, margin: '0 auto' }}>
+                Programează un call când îți e confortabil și analizăm situația ta în detaliu.<br />
+                <strong style={{ color: 'white' }}>Doar 30 de minute, gratuit, fără obligații.</strong>
               </p>
             </div>
 
